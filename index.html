@@ -815,123 +815,226 @@
 ════════════════════════════════════════════════════ -->
 <section class="slide" id="s7" style="background:var(--bg);">
   <div class="slide-num">✦ 06 · API ІНТЕГРАЦІЯ</div>
-  <h2 class="slide-title">Єдиний <span class="accent">REST API</span> ендпоінт</h2>
+  <h2 class="slide-title">Модульна <span class="accent">API-архітектура</span></h2>
   <p class="slide-desc">
-    Всі запити спрямовуються на <strong>https://thebeauty-room.com/api.php</strong>.
-    Тип операції визначається параметром <code style="color:var(--pink-dark);">action</code>.
+    Серверна частина складається з <strong>18 окремих PHP-файлів</strong>, кожен з яких відповідає
+    за чітко визначену операцію. Базовий URL: <strong>https://thebeauty-room.com/api/</strong>.
+    Файл <code style="color:var(--pink-dark);">db.php</code> підключається кожним ендпоінтом як спільне з'єднання з базою даних.
   </p>
 
-  <div class="grid2">
+  <!-- Architecture overview -->
+  <div class="arch-diagram" style="margin-bottom:28px;">
+    <div class="arch-box">
+      <div class="icon">📱</div>
+      <div class="name">Beauty Room App</div>
+      <div class="tech">React Native</div>
+    </div>
+    <div class="arch-arrow">→</div>
+    <div class="arch-box" style="border-color:var(--pink-soft);background:var(--pink-pale);">
+      <div class="icon">🌐</div>
+      <div class="name">HTTPS запит</div>
+      <div class="tech">thebeauty-room.com/api/</div>
+    </div>
+    <div class="arch-arrow">→</div>
+    <div class="arch-box">
+      <div class="icon">🗄️</div>
+      <div class="name">PHP ендпоінт</div>
+      <div class="tech">*.php + db.php</div>
+    </div>
+    <div class="arch-arrow">→</div>
+    <div class="arch-box">
+      <div class="icon">🔐</div>
+      <div class="name">MySQL БД</div>
+      <div class="tech">JSON відповідь</div>
+    </div>
+  </div>
+
+  <div class="grid3">
+
+    <!-- Auth -->
     <div>
-      <h3 style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:14px;">GET-запити (отримання даних)</h3>
+      <h3 style="font-size:13px;font-weight:800;color:var(--sub);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;">🔐 Авторизація та Користувачі</h3>
+      <div class="endpoint">
+        <span class="method post">POST</span>
+        <div>
+          <div class="path">login.php</div>
+          <div style="font-size:11px;color:var(--sub);">Вхід за email + пароль → JWT/сесія</div>
+        </div>
+      </div>
+      <div class="endpoint">
+        <span class="method post">POST</span>
+        <div>
+          <div class="path">register_user.php</div>
+          <div style="font-size:11px;color:var(--sub);">Реєстрація нового майстра</div>
+        </div>
+      </div>
+      <div class="endpoint">
+        <span class="method get">GET</span>
+        <div>
+          <div class="path">get_users.php</div>
+          <div style="font-size:11px;color:var(--sub);">Список усіх майстрів/користувачів</div>
+        </div>
+      </div>
 
+      <h3 style="font-size:13px;font-weight:800;color:var(--sub);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;margin-top:18px;">📋 Записи клієнтів</h3>
       <div class="endpoint">
         <span class="method get">GET</span>
-        <span class="path">?action=get_all_data</span>
-        <span class="desc">Всі записи, архів, дзвінки</span>
-      </div>
-      <div class="endpoint">
-        <span class="method get">GET</span>
-        <span class="path">?action=get_pricing</span>
-        <span class="desc">Прайс-лист категоріями</span>
-      </div>
-      <div class="endpoint">
-        <span class="method get">GET</span>
-        <span class="path">?action=get_profile&user_id=…</span>
-        <span class="desc">Дані профілю майстра</span>
-      </div>
-
-      <h3 style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:14px;margin-top:20px;">POST: Авторизація та профіль</h3>
-      <div class="endpoint">
-        <span class="method post">POST</span>
-        <span class="path">action=login</span>
-        <span class="desc">Вхід (email, password)</span>
+        <div>
+          <div class="path">get_records.php</div>
+          <div style="font-size:11px;color:var(--sub);">Активні записи (фільтр по майстру/даті)</div>
+        </div>
       </div>
       <div class="endpoint">
         <span class="method post">POST</span>
-        <span class="path">action=update_profile</span>
-        <span class="desc">Оновлення імені, тел., спец.</span>
+        <div>
+          <div class="path">create_record.php</div>
+          <div style="font-size:11px;color:var(--sub);">Новий запис клієнта</div>
+        </div>
       </div>
       <div class="endpoint">
         <span class="method post">POST</span>
-        <span class="path">action=upload_avatar</span>
-        <span class="desc">Завантаження фото профілю</span>
+        <div>
+          <div class="path">update_record.php</div>
+          <div style="font-size:11px;color:var(--sub);">Редагування існуючого запису</div>
+        </div>
+      </div>
+      <div class="endpoint">
+        <span class="method post">POST</span>
+        <div>
+          <div class="path">delete_item.php</div>
+          <div style="font-size:11px;color:var(--sub);">Видалення запису / дзвінка</div>
+        </div>
       </div>
     </div>
 
+    <!-- Records management -->
     <div>
-      <h3 style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:14px;">POST: Записи клієнтів</h3>
+      <h3 style="font-size:13px;font-weight:800;color:var(--sub);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;">🗂️ Архів та Дзвінки</h3>
       <div class="endpoint">
         <span class="method post">POST</span>
-        <span class="path">action=add_record</span>
-        <span class="desc">Новий запис</span>
+        <div>
+          <div class="path">archive_record.php</div>
+          <div style="font-size:11px;color:var(--sub);">Архівація / відновлення запису</div>
+        </div>
       </div>
       <div class="endpoint">
-        <span class="method post">POST</span>
-        <span class="path">action=update_record</span>
-        <span class="desc">Редагування запису</span>
+        <span class="method get">GET</span>
+        <div>
+          <div class="path">get_archive.php</div>
+          <div style="font-size:11px;color:var(--sub);">Список архівованих записів</div>
+        </div>
       </div>
       <div class="endpoint">
-        <span class="method post">POST</span>
-        <span class="path">action=delete_record</span>
-        <span class="desc">Видалення активного</span>
+        <span class="method get">GET</span>
+        <div>
+          <div class="path">get_calls.php</div>
+          <div style="font-size:11px;color:var(--sub);">Заявки на зворотній дзвінок</div>
+        </div>
       </div>
       <div class="endpoint">
-        <span class="method post">POST</span>
-        <span class="path">action=move_to_archive</span>
-        <span class="desc">Архівація запису</span>
+        <span class="method get">GET</span>
+        <div>
+          <div class="path">get_history.php</div>
+          <div style="font-size:11px;color:var(--sub);">Повна історія всіх записів</div>
+        </div>
       </div>
       <div class="endpoint">
-        <span class="method post">POST</span>
-        <span class="path">action=restore</span>
-        <span class="desc">Відновлення з архіву</span>
-      </div>
-      <div class="endpoint">
-        <span class="method post">POST</span>
-        <span class="path">action=delete_archive</span>
-        <span class="desc">Видалення з архіву</span>
-      </div>
-      <div class="endpoint">
-        <span class="method post">POST</span>
-        <span class="path">action=delete_appointment</span>
-        <span class="desc">Видалення дзвінка</span>
+        <span class="method get">GET</span>
+        <div>
+          <div class="path">get_comments.php</div>
+          <div style="font-size:11px;color:var(--sub);">Коментарі до записів</div>
+        </div>
       </div>
 
-      <h3 style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:14px;margin-top:16px;">POST: Прайс та сповіщення</h3>
+      <h3 style="font-size:13px;font-weight:800;color:var(--sub);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;margin-top:18px;">🔗 Спільна інфраструктура</h3>
+      <div class="endpoint" style="background:var(--pink-pale);border-color:var(--pink-soft);">
+        <span style="font-size:18px;">🗄️</span>
+        <div>
+          <div class="path">db.php</div>
+          <div style="font-size:11px;color:var(--sub);">З'єднання з MySQL, підключається всіма файлами</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pricing -->
+    <div>
+      <h3 style="font-size:13px;font-weight:800;color:var(--sub);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;">💰 Прайс-лист та Послуги</h3>
       <div class="endpoint">
-        <span class="method post">POST</span>
-        <span class="path">action=add_service</span>
-        <span class="desc">Нова послуга</span>
+        <span class="method get">GET</span>
+        <div>
+          <div class="path">get_price_list.php</div>
+          <div style="font-size:11px;color:var(--sub);">Прайс-лист по категоріях</div>
+        </div>
+      </div>
+      <div class="endpoint">
+        <span class="method get">GET</span>
+        <div>
+          <div class="path">get_services.php</div>
+          <div style="font-size:11px;color:var(--sub);">Всі послуги без прив'язки до ціни</div>
+        </div>
       </div>
       <div class="endpoint">
         <span class="method post">POST</span>
-        <span class="path">action=update_service</span>
-        <span class="desc">Редагування послуги</span>
+        <div>
+          <div class="path">add_service.php</div>
+          <div style="font-size:11px;color:var(--sub);">Додавання нової послуги з ціною</div>
+        </div>
       </div>
       <div class="endpoint">
         <span class="method post">POST</span>
-        <span class="path">action=check_new_appointments</span>
-        <span class="desc">Перевірка нових заявок</span>
+        <div>
+          <div class="path">update_service.php</div>
+          <div style="font-size:11px;color:var(--sub);">Редагування послуги та ціни</div>
+        </div>
       </div>
       <div class="endpoint">
         <span class="method post">POST</span>
-        <span class="path">action=add_callback</span>
-        <span class="desc">Тест push-сповіщень</span>
+        <div>
+          <div class="path">delete_service.php</div>
+          <div style="font-size:11px;color:var(--sub);">Видалення послуги з прайсу</div>
+        </div>
+      </div>
+
+      <!-- Summary -->
+      <div class="highlight" style="margin-top:16px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;text-align:center;margin-bottom:10px;">
+          <div>
+            <div style="font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:var(--pink);">18</div>
+            <div style="font-size:11px;color:var(--sub);font-weight:600;">PHP-файлів</div>
+          </div>
+          <div>
+            <div style="font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:var(--pink);">7</div>
+            <div style="font-size:11px;color:var(--sub);font-weight:600;">GET ендпоінтів</div>
+          </div>
+          <div>
+            <div style="font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:var(--pink);">10</div>
+            <div style="font-size:11px;color:var(--sub);font-weight:600;">POST ендпоінтів</div>
+          </div>
+          <div>
+            <div style="font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:var(--pink);">1</div>
+            <div style="font-size:11px;color:var(--sub);font-weight:600;">db.php (спільний)</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="highlight" style="margin-top:20px;">
     <div class="code-block">
-<span class="cmt">// Приклад: polling нових заявок (index.tsx)</span>
-<span class="kw">const</span> formData = <span class="kw">new</span> FormData();
-formData.append(<span class="str">'action'</span>, <span class="str">'check_new_appointments'</span>);
-formData.append(<span class="str">'last_check_time'</span>, lastCheckTime.current);
+<span class="cmt">// Приклад: отримання всіх записів (CreatorDashboard.tsx)</span>
+<span class="kw">const</span> resRec = <span class="kw">await</span> fetch(<span class="str">`${API_BASE_URL}/get_records.php`</span>);
+<span class="kw">const</span> jsonRec = <span class="kw">await</span> resRec.json(); <span class="cmt">// { status, data: { records[], archive[], calls[] } }</span>
 
-<span class="kw">const</span> response = <span class="kw">await</span> fetch(<span class="str">'https://thebeauty-room.com/api.php'</span>, {
-  method: <span class="str">'POST'</span>, body: formData
-});
-<span class="kw">const</span> json = <span class="kw">await</span> response.json(); <span class="cmt">// { status, new_items[], server_time }</span>
+<span class="cmt">// Приклад: архівація запису (archive_record.php)</span>
+<span class="kw">const</span> fd = <span class="kw">new</span> FormData();
+fd.append(<span class="str">'id'</span>, String(realId));
+<span class="kw">await</span> fetch(<span class="str">`${API_BASE_URL}/archive_record.php`</span>, { method: <span class="str">'POST'</span>, body: fd });
+
+<span class="cmt">// Приклад: polling нових заявок (index.tsx)</span>
+<span class="kw">const</span> fd2 = <span class="kw">new</span> FormData();
+fd2.append(<span class="str">'last_check_time'</span>, lastCheckTime.current);
+<span class="kw">const</span> res = <span class="kw">await</span> fetch(<span class="str">`${API_BASE_URL}/get_calls.php`</span>, { method: <span class="str">'POST'</span>, body: fd2 });
+<span class="kw">const</span> json = <span class="kw">await</span> res.json(); <span class="cmt">// { status, new_items[], server_time }</span>
     </div>
   </div>
 </section>
