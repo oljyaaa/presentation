@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beauty Room App — Презентація програмного продукту</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --pink:       #E8879E;
+      --pink-dark:  #C45E78;
+      --pink-soft:  #F5C6D3;
+      --pink-pale:  #FEF3F7;
+      --bg:         #FDF6F9;
+      --card:       #FFFFFF;
+      --text:       #3B2730;
+      --sub:        #9C7D87;
+      --muted:      #C4A8B2;
+      --border:     #F0DDE4;
+      --success:    #7EC8A4;
+      --danger:     #E07575;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ──────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(253,246,249,0.92);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 64px;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 18px; color: var(--text); }
+    .nav-brand .rose { font-size: 22px; }
+    .nav-links { display: flex; gap: 6px; }
+    .nav-links a {
+      font-size: 12px; font-weight: 600; color: var(--sub); text-decoration: none;
+      padding: 6px 14px; border-radius: 20px; transition: all .2s;
+      letter-spacing: .4px;
+    }
+    .nav-links a:hover { background: var(--pink-pale); color: var(--pink-dark); }
+
+    /* ── SLIDES ───────────────────────────────────── */
+    .slide {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 100px 60px 60px;
+      position: relative; overflow: hidden;
+    }
+
+    /* ── DECORATIVE ORBS ─────────────────────────── */
+    .orb {
+      position: absolute; border-radius: 50%; filter: blur(60px); opacity: .45;
+      pointer-events: none;
+      animation: float 7s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0) translateX(0); }
+      50%      { transform: translateY(-22px) translateX(10px); }
+    }
+
+    /* ── SLIDE 1: COVER ──────────────────────────── */
+    #s1 { background: linear-gradient(135deg, #FDF6F9 0%, #FFF0F5 50%, #FEF3F7 100%); }
+    #s1 .orb1 { width:460px;height:460px; background:#F9D0DC; top:-120px; left:-120px; }
+    #s1 .orb2 { width:320px;height:320px; background:#FADADD; bottom:-80px; right:-80px; animation-delay:2s; }
+    #s1 .orb3 { width:200px;height:200px; background:#F5C6D3; top:40%; left:60%; animation-delay:4s; }
+
+    .cover-inner { position: relative; z-index: 2; max-width: 900px; margin: 0 auto; text-align: center; }
+    .cover-logo {
+      width: 110px; height: 110px; border-radius: 55px;
+      background: var(--card);
+      border: 2px solid var(--pink-soft);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 28px;
+      box-shadow: 0 20px 60px rgba(232,135,158,.18);
+      font-size: 50px;
+    }
+    .cover-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 20px; padding: 6px 18px; margin-bottom: 24px;
+      font-size: 11px; font-weight: 700; color: var(--sub); letter-spacing: 2px;
+      box-shadow: 0 4px 20px rgba(0,0,0,.04);
+    }
+    .cover-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 900; color: var(--text);
+      line-height: 1.1; margin-bottom: 16px;
+    }
+    .cover-title span { color: var(--pink); }
+    .cover-subtitle {
+      font-size: 18px; color: var(--sub); max-width: 600px;
+      margin: 0 auto 40px; line-height: 1.6; font-weight: 400;
+    }
+    .cover-meta {
+      display: flex; justify-content: center; gap: 40px;
+      flex-wrap: wrap;
+    }
+    .cover-meta-item { text-align: center; }
+    .cover-meta-item .label { font-size: 10px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 4px; }
+    .cover-meta-item .value { font-size: 15px; font-weight: 700; color: var(--text); }
+
+    /* ── SLIDE HEADER ────────────────────────────── */
+    .slide-num {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--pink-pale); border: 1px solid var(--border);
+      border-radius: 20px; padding: 5px 16px; margin-bottom: 18px;
+      font-size: 11px; font-weight: 700; color: var(--pink-dark); letter-spacing: 2px;
+    }
+    .slide-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 700; color: var(--text);
+      line-height: 1.15; margin-bottom: 16px;
+    }
+    .slide-title .accent { color: var(--pink); }
+    .slide-desc { font-size: 16px; color: var(--sub); max-width: 760px; line-height: 1.7; margin-bottom: 40px; }
+
+    /* ── CARDS / GRID ────────────────────────────── */
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+    .card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 22px; padding: 26px; position: relative;
+      box-shadow: 0 4px 24px rgba(196,94,120,.06);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(196,94,120,.12); }
+
+    .card-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; margin-bottom: 14px;
+    }
+    .icon-pink  { background: var(--pink-pale); }
+    .icon-rose  { background: #FFF0F0; }
+    .icon-green { background: #F0FFF4; }
+    .icon-blue  { background: #F0F4FF; }
+    .icon-purple{ background: #F5F0FF; }
+    .icon-amber { background: #FFFBF0; }
+
+    .card-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .card-body  { font-size: 13px; color: var(--sub); line-height: 1.6; }
+
+    /* ── BADGE ───────────────────────────────────── */
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 12px; border-radius: 20px;
+      font-size: 11px; font-weight: 700; letter-spacing: .5px;
+    }
+    .badge-pink   { background: var(--pink-pale); color: var(--pink-dark); border: 1px solid var(--pink-soft); }
+    .badge-green  { background: #F0FFF4; color: #3A8A6C; border: 1px solid #B7DECE; }
+    .badge-blue   { background: #F0F4FF; color: #3A6AB0; border: 1px solid #B7CAE6; }
+    .badge-orange { background: #FFFBF0; color: #A07020; border: 1px solid #E6D4A0; }
+    .badge-red    { background: #FFF0F0; color: #B04040; border: 1px solid #E6B7B7; }
+    .badge-purple { background: #F5F0FF; color: #7050A0; border: 1px solid #D4B7E6; }
+
+    /* ── TABLE ───────────────────────────────────── */
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    thead th {
+      background: linear-gradient(135deg, var(--pink), var(--pink-dark));
+      color: #fff; padding: 12px 16px; text-align: left;
+      font-size: 12px; font-weight: 700; letter-spacing: .8px;
+    }
+    thead th:first-child { border-radius: 12px 0 0 0; }
+    thead th:last-child  { border-radius: 0 12px 0 0; }
+    tbody tr { border-bottom: 1px solid var(--border); }
+    tbody tr:hover { background: var(--pink-pale); }
+    tbody td { padding: 11px 16px; color: var(--text); }
+    tbody td .small { font-size: 11px; color: var(--sub); }
+
+    /* ── CODE BLOCK ──────────────────────────────── */
+    .code-block {
+      background: #1A1325; border-radius: 16px; padding: 20px 24px;
+      font-family: 'Courier New', monospace; font-size: 13px;
+      color: #F2AECB; line-height: 1.8;
+      border: 1px solid #2A1F35;
+      overflow-x: auto;
+    }
+    .code-block .kw  { color: #D4789A; }
+    .code-block .str { color: #7EC8A4; }
+    .code-block .cmt { color: #5C4F6B; }
+    .code-block .num { color: #F0B97A; }
+
+    /* ── TIMELINE ────────────────────────────────── */
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+    .tl-item  { display: flex; gap: 20px; align-items: flex-start; padding-bottom: 28px; }
+    .tl-left  { display: flex; flex-direction: column; align-items: center; min-width: 44px; }
+    .tl-dot   { width: 44px; height: 44px; border-radius: 22px; background: var(--pink-pale); border: 2px solid var(--pink-soft); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .tl-line  { width: 2px; flex: 1; background: var(--border); min-height: 20px; margin-top: 4px; }
+    .tl-right { flex: 1; padding-top: 8px; }
+    .tl-right h4 { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .tl-right p  { font-size: 13px; color: var(--sub); line-height: 1.6; }
+
+    /* ── SECTION DIVIDER ─────────────────────────── */
+    .divider { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+
+    /* ── STAT BOX ────────────────────────────────── */
+    .stat-box { text-align: center; }
+    .stat-box .num { font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 900; color: var(--pink); line-height: 1; }
+    .stat-box .lbl { font-size: 12px; font-weight: 600; color: var(--sub); margin-top: 6px; letter-spacing: .8px; }
+
+    /* ── LIST ────────────────────────────────────── */
+    .check-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .check-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--sub); line-height: 1.5; }
+    .check-list li::before { content: '✦'; color: var(--pink); flex-shrink: 0; margin-top: 1px; }
+    .check-list li strong { color: var(--text); }
+
+    /* ── PILL ────────────────────────────────────── */
+    .pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--pink-pale); color: var(--pink-dark);
+      border: 1px solid var(--pink-soft); border-radius: 20px;
+      padding: 5px 14px; font-size: 12px; font-weight: 600;
+    }
+
+    /* ── HIGHLIGHT BOX ───────────────────────────── */
+    .highlight {
+      background: linear-gradient(135deg, var(--pink-pale) 0%, #FFF8FA 100%);
+      border: 1px solid var(--pink-soft); border-radius: 18px;
+      padding: 24px; position: relative;
+    }
+    .highlight::before {
+      content: '✦'; position: absolute; top: 14px; right: 18px;
+      color: var(--pink-soft); font-size: 24px;
+    }
+
+    /* ── API ENDPOINT ────────────────────────────── */
+    .endpoint {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 14px 18px; margin-bottom: 10px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .method {
+      padding: 3px 10px; border-radius: 8px; font-size: 11px;
+      font-weight: 800; font-family: monospace; flex-shrink: 0;
+    }
+    .method.get  { background: #F0FFF4; color: #3A8A6C; }
+    .method.post { background: #F0F4FF; color: #3A6AB0; }
+    .endpoint .path { font-family: monospace; font-size: 13px; color: var(--pink-dark); font-weight: 600; }
+    .endpoint .desc { font-size: 12px; color: var(--sub); margin-left: auto; }
+
+    /* ── TEST CASE ────────────────────────────────── */
+    .tc {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 14px 18px; margin-bottom: 8px;
+    }
+    .tc-header { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+    .tc-id { font-size: 10px; font-weight: 800; color: var(--muted); letter-spacing: 1px; }
+    .tc-name { font-size: 14px; font-weight: 700; color: var(--text); }
+    .tc-body { font-size: 12px; color: var(--sub); line-height: 1.6; }
+    .tc .result { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; margin-top: 8px; }
+    .pass { color: #3A8A6C; } .fail { color: #B04040; }
+
+    /* ── ROLE CARD ────────────────────────────────── */
+    .role-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 20px; padding: 22px;
+    }
+    .role-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+    .role-icon { font-size: 28px; }
+    .role-name { font-size: 16px; font-weight: 800; color: var(--text); }
+    .role-tag  { font-size: 11px; color: var(--sub); }
+
+    /* ── FOOTER ──────────────────────────────────── */
+    footer {
+      text-align: center; padding: 40px;
+      background: var(--card); border-top: 1px solid var(--border);
+      font-size: 13px; color: var(--muted);
+    }
+
+    /* ── SCROLLBAR ───────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--pink-soft); border-radius: 3px; }
+
+    /* ── RESPONSIVE ──────────────────────────────── */
+    @media (max-width: 900px) {
+      .slide { padding: 80px 24px 40px; }
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .grid2, .grid3, .grid4 { grid-template-columns: 1fr; }
+    }
+
+    /* ── ANIMATION ───────────────────────────────── */
+    .fade-in { animation: fadeIn .7s ease forwards; }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:none; } }
+
+    /* ── PROGRESS BAR ────────────────────────────── */
+    .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--pink), var(--pink-dark)); z-index: 200; transition: width .1s; }
+
+    .arch-diagram {
+      display: flex; align-items: center; justify-content: center; gap: 0;
+      flex-wrap: wrap; margin: 20px 0;
+    }
+    .arch-box {
+      background: var(--card); border: 1.5px solid var(--border);
+      border-radius: 18px; padding: 18px 22px; text-align: center;
+      min-width: 140px;
+    }
+    .arch-box .icon { font-size: 28px; margin-bottom: 6px; }
+    .arch-box .name { font-size: 13px; font-weight: 700; color: var(--text); }
+    .arch-box .tech { font-size: 11px; color: var(--sub); margin-top: 3px; }
+    .arch-arrow {
+      font-size: 28px; color: var(--pink-soft); padding: 0 10px;
+      display: flex; align-items: center;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div class="progress-bar" id="progress"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand"><span class="rose">🌸</span> Beauty Room</div>
+  <div class="nav-links">
+    <a href="#s1">Титул</a>
+    <a href="#s2">Предметна область</a>
+    <a href="#s3">Доцільність</a>
+    <a href="#s4">Архітектура</a>
+    <a href="#s5">Функції</a>
+    <a href="#s6">Вимоги</a>
+    <a href="#s7">API</a>
+    <a href="#s8">Тестування</a>
+    <a href="#s9">Впровадження</a>
+    <a href="#s10">Перспективи</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 1 — COVER
+════════════════════════════════════════════════════ -->
+<section class="slide" id="s1">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div class="cover-inner">
+    <div class="cover-logo">🌸</div>
+    <div class="cover-tag">✦ ПРОГРАМНИЙ ПРОДУКТ ✦</div>
+    <h1 class="cover-title">Beauty Room<br><span>Workspace App</span></h1>
+    <p class="cover-subtitle">
+      Мобільний застосунок для управління записами, клієнтами та прайс-листом<br>
+      косметологічного салону <strong>Beeauty Room</strong>, м. Бердичів
+    </p>
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <div class="label">Замовник</div>
+        <div class="value">Островська Ольга Василівна</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="label">Платформа</div>
+        <div class="value">Android (Expo / React Native)</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="label">Версія</div>
+        <div class="value">1.0.0 · 2026</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="label">API</div>
+        <div class="value">thebeauty-room.com/api.php</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 2 — ПРЕДМЕТНА ОБЛАСТЬ
+════════════════════════════════════════════════════ -->
+<section class="slide" id="s2" style="background:#fff;">
+  <div class="slide-num">✦ 01 · ПРЕДМЕТНА ОБЛАСТЬ</div>
+  <h2 class="slide-title">Косметологічний бізнес<br>у <span class="accent">цифрову</span> еру</h2>
+  <p class="slide-desc">
+    Салон краси — це складна сервісна система, де критично важливо координувати
+    майстрів, відстежувати клієнтів та миттєво реагувати на нові запити.
+    Beauty Room Workspace App автоматизує ці процеси.
+  </p>
+
+  <div class="grid3">
+    <div class="card">
+      <div class="card-icon icon-pink">💅</div>
+      <div class="card-title">Послуги салону</div>
+      <div class="card-body">
+        Масаж, Elos-епіляція, Доглядові процедури — три ключові напрямки,
+        кожен з яких обслуговує окремий майстер із власним розкладом і клієнтурою.
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon icon-blue">📅</div>
+      <div class="card-title">Записи та розклад</div>
+      <div class="card-body">
+        Кожен запис містить клієнта, послугу, майстра, дату й час.
+        Система дозволяє вести як активні записи, так і архів виконаних послуг.
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon icon-green">📞</div>
+      <div class="card-title">Клієнтські заявки</div>
+      <div class="card-body">
+        З вебсайту салону надходять запити на зворотній дзвінок — адміністратор
+        бачить їх миттєво через push-сповіщення і може одразу записати клієнта.
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon icon-purple">👥</div>
+      <div class="card-title">Ролева система</div>
+      <div class="card-body">
+        <strong>Creator / Admin</strong> — повний доступ до всіх даних.<br>
+        <strong>Майстер</strong> — бачить лише свою категорію записів (Масаж, Elos, Догляд).
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon icon-amber">💰</div>
+      <div class="card-title">Прайс-лист</div>
+      <div class="card-body">
+        Адміністратор може переглядати, додавати та редагувати послуги та їхні ціни
+        прямо в мобільному застосунку, без відкриття вебпанелі.
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon icon-rose">📊</div>
+      <div class="card-title">Звітність</div>
+      <div class="card-body">
+        Генерація PDF-звіту по активних записах із можливістю одразу поділитись
+        файлом через будь-який месенджер або зберегти локально.
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:32px;" class="highlight">
+    <p style="font-size:14px;color:var(--sub);line-height:1.7;">
+      <strong style="color:var(--text);">Контекст салону:</strong>
+      Косметологічний салон <strong>Beeauty Room</strong> — сучасний заклад краси у місті Бердичів.
+      Власниця — <strong>Островська Ольга Василівна</strong> — є безпосереднім замовником системи.
+      Салон має декілька спеціалістів різного профілю, активно залучає клієнтів через власний сайт
+      та потребує зручного інструменту для щоденного управління потоком записів.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 3 — ДОЦІЛЬНІСТЬ
+════════════════════════════════════════════════════ -->
+<section class="slide" id="s3" style="background:var(--bg);">
+  <div class="slide-num">✦ 02 · ДОЦІЛЬНІСТЬ</div>
+  <h2 class="slide-title">Навіщо <span class="accent">мобільний</span> застосунок?</h2>
+  <p class="slide-desc">Порівняльний аналіз підходів до управління косметологічним салоном.</p>
+
+  <div class="grid2">
+    <div>
+      <h3 style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:16px;">❌ До впровадження</h3>
+      <ul class="check-list">
+        <li>Записи велись у паперовому журналі або в Excel</li>
+        <li>Адміністратор не отримував сповіщень про нові запити з сайту</li>
+        <li>Майстри не мали доступу до свого розкладу поза робочим місцем</li>
+        <li>Прайс-лист оновлювався вручну на сайті (технічні знання)</li>
+        <li>Генерація звітів — ручна, займала значний час</li>
+        <li>Відсутність архівації виконаних записів</li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:16px;">✅ Після впровадження</h3>
+      <ul class="check-list">
+        <li>Всі записи — в єдиній системі, доступній з телефону 24/7</li>
+        <li><strong>Миттєві push-сповіщення</strong> про нові заявки з сайту (опитування кожні 15 с)</li>
+        <li>Кожен майстер бачить <strong>тільки свої</strong> записи — конфіденційність</li>
+        <li>Прайс редагується прямо з телефону без технічних знань</li>
+        <li>PDF-звіт генерується натисканням однієї кнопки</li>
+        <li>Автоматичне архівування + відновлення записів</li>
+      </ul>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="grid4" style="margin-top:10px;">
+    <div class="card stat-box">
+      <div class="num">3</div>
+      <div class="lbl">ролі користувачів</div>
+    </div>
+    <div class="card stat-box">
+      <div class="num">15с</div>
+      <div class="lbl">інтервал polling</div>
+    </div>
+    <div class="card stat-box">
+      <div class="num">10</div>
+      <div class="lbl">тестових файлів</div>
+    </div>
+    <div class="card stat-box">
+      <div class="num">1</div>
+      <div class="lbl">централізований API</div>
+    </div>
+  </div>
+
+  <div style="margin-top:28px;" class="highlight">
+    <p style="font-size:14px;color:var(--sub);line-height:1.7;">
+      <strong style="color:var(--text);">Ключова перевага:</strong>
+      Застосунок інтегрується з вже наявним вебсайтом салону — дані з форм запису клієнтів
+      автоматично потрапляють до веб-адміністративної панелі, звідки мобільний застосунок
+      отримує їх через REST API. <strong>Жодних дублювань</strong>, єдина точка правди.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 4 — АРХІТЕКТУРА
+════════════════════════════════════════════════════ -->
+<section class="slide" id="s4" style="background:#fff;">
+  <div class="slide-num">✦ 03 · АРХІТЕКТУРА СИСТЕМИ</div>
+  <h2 class="slide-title">Тришарова <span class="accent">архітектура</span></h2>
+  <p class="slide-desc">
+    Система побудована за принципом розділення відповідальностей:
+    клієнт → веб-адмін → мобільний застосунок.
+  </p>
+
+  <div class="arch-diagram">
+    <div class="arch-box">
+      <div class="icon">🌐</div>
+      <div class="name">Клієнтський сайт</div>
+      <div class="tech">PHP · MySQL</div>
+      <div class="tech" style="margin-top:4px;color:var(--pink-dark);font-weight:600;">thebeauty-room.com</div>
+    </div>
+    <div class="arch-arrow">→</div>
+    <div class="arch-box" style="border-color:var(--pink-soft);">
+      <div class="icon">🗄️</div>
+      <div class="name">Web-адмін панель</div>
+      <div class="tech">PHP REST API</div>
+      <div class="tech" style="margin-top:4px;color:var(--pink-dark);font-weight:600;">/api.php</div>
+    </div>
+    <div class="arch-arrow">↔</div>
+    <div class="arch-box" style="background:var(--pink-pale);border-color:var(--pink-soft);">
+      <div class="icon">📱</div>
+      <div class="name">Beauty Room App</div>
+      <div class="tech">React Native · Expo</div>
+      <div class="tech" style="margin-top:4px;color:var(--pink-dark);font-weight:600;">Android .apk</div>
+    </div>
+  </div>
+
+  <div class="grid2" style="margin-top:24px;">
+    <div>
+      <h3 style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:16px;">📱 Мобільна частина</h3>
+      <ul class="check-list">
+        <li><strong>Expo SDK 54</strong> — базова платформа</li>
+        <li><strong>React Native 0.81</strong> — UI-компоненти</li>
+        <li><strong>expo-router</strong> — файлова навігація</li>
+        <li><strong>AsyncStorage</strong> — локальне кешування сесії</li>
+        <li><strong>expo-notifications</strong> — локальні push-сповіщення</li>
+        <li><strong>expo-print + expo-sharing</strong> — генерація PDF</li>
+        <li><strong>expo-image-picker</strong> — вибір фото профілю</li>
+        <li><strong>TypeScript</strong> — статична типізація</li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:16px;">🗂️ Структура екранів</h3>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-left">
+            <div class="tl-dot">🔐</div>
+            <div class="tl-line"></div>
+          </div>
+          <div class="tl-right">
+            <h4>login.tsx</h4>
+            <p>Авторизація через email/пароль. Shimmer-анімація кнопки, floating orb-фони.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-left">
+            <div class="tl-dot">📊</div>
+            <div class="tl-line"></div>
+          </div>
+          <div class="tl-right">
+            <h4>index.tsx → CreatorDashboard / StandardDashboard</h4>
+            <p>Головний маршрутизатор. Вибір дашборда за роллю користувача.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-left">
+            <div class="tl-dot">👤</div>
+          </div>
+          <div class="tl-right">
+            <h4>profile.tsx</h4>
+            <p>Редагування профілю, завантаження аватара, темна/світла тема.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 5 — ФУНКЦІОНАЛ
+════════════════════════════════════════════════════ -->
+<section class="slide" id="s5" style="background:var(--bg);">
+  <div class="slide-num">✦ 04 · ФУНКЦІОНАЛЬНИЙ ОПИС</div>
+  <h2 class="slide-title">Що вміє <span class="accent">застосунок</span></h2>
+
+  <div class="grid2">
+    <div>
+      <h3 style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:8px;">
+        <span style="background:var(--pink-pale);border-radius:10px;padding:4px 10px;color:var(--pink-dark);font-size:11px;">CREATOR / ADMIN</span>
+        Повний доступ
+      </h3>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-left"><div class="tl-dot">📅</div><div class="tl-line"></div></div>
+          <div class="tl-right"><h4>Інтерактивний календар</h4><p>Місячний вид з кольоровими крапками по кожному майстру. Кліком відкривається bottom sheet з переліком записів дня.</p></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-left"><div class="tl-dot">📝</div><div class="tl-line"></div></div>
+          <div class="tl-right"><h4>CRUD записів</h4><p>Додавання, редагування, архівація, відновлення та видалення записів. Конвертація дзвінка у запис одним натисканням.</p></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-left"><div class="tl-dot">🔔</div><div class="tl-line"></div></div>
+          <div class="tl-right"><h4>Push-сповіщення</h4><p>Polling кожні 15 секунд. При новій заявці з сайту — миттєве локальне сповіщення з ім'ям та телефоном клієнта.</p></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-left"><div class="tl-dot">💰</div><div class="tl-line"></div></div>
+          <div class="tl-right"><h4>Управління прайсом</h4><p>Перегляд та редагування послуг по категоріях. Додавання нових позицій із зазначенням ціни.</p></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-left"><div class="tl-dot">📄</div></div>
+          <div class="tl-right"><h4>PDF-звіт</h4><p>Генерація HTML-звіту з брендованим оформленням Beauty Room та поширення через системний share sheet.</p></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h3 style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:8px;">
+        <span style="background:#F0F4FF;border-radius:10px;padding:4px 10px;color:#3A6AB0;font-size:11px;">МАЙСТЕР</span>
+        Обмежений доступ
+      </h3>
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-icon icon-blue">🎯</div>
+        <div class="card-title">Записи своєї категорії</div>
+        <div class="card-body">Кожен майстер бачить виключно свою категорію (Масаж / Elos / Догляд). Архів і дзвінки доступні всім майстрам для координації.</div>
+      </div>
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-icon icon-pink">👤</div>
+        <div class="card-title">Профіль майстра</div>
+        <div class="card-body">Редагування імені, телефону, спеціалізації. Завантаження фото профілю з галереї. Підтримка темної/світлої теми.</div>
+      </div>
+      <div class="card">
+        <div class="card-icon icon-green">✍️</div>
+        <div class="card-title">Форма запису</div>
+        <div class="card-body">Майстер може додати новий запис — але лише у свою категорію. Форма містить вибір дати/часу та майстра.</div>
+      </div>
+
+      <div class="highlight" style="margin-top:16px;">
+        <p style="font-size:13px;color:var(--sub);">
+          <strong style="color:var(--text);">Безпека доступу:</strong><br>
+          Функція <code style="color:var(--pink-dark);">canAccess(tab, username)</code> перевіряє
+          дозволи перед відображенням будь-якого розділу меню.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 6 — ВИМОГИ
+════════════════════════════════════════════════════ -->
+<section class="slide" id="s6" style="background:#fff;">
+  <div class="slide-num">✦ 05 · ВИМОГИ ДО СИСТЕМИ</div>
+  <h2 class="slide-title">Функціональні та <span class="accent">нефункціональні</span> вимоги</h2>
+
+  <div class="grid2">
+    <!-- Функціональні -->
+    <div>
+      <h3 style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:16px;">
+        ⚙️ Функціональні вимоги
+      </h3>
+      <table>
+        <thead>
+          <tr><th>ID</th><th>Вимога</th><th>Пріоритет</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>FR-01</strong></td>
+            <td>Автентифікація через email та пароль</td>
+            <td><span class="badge badge-red">Критичний</span></td>
+          </tr>
+          <tr>
+            <td><strong>FR-02</strong></td>
+            <td>Відображення записів у вигляді списку та календаря</td>
+            <td><span class="badge badge-red">Критичний</span></td>
+          </tr>
+          <tr>
+            <td><strong>FR-03</strong></td>
+            <td>CRUD операції над записами клієнтів</td>
+            <td><span class="badge badge-red">Критичний</span></td>
+          </tr>
+          <tr>
+            <td><strong>FR-04</strong></td>
+            <td>Ролева система доступу (creator, admin, майстер)</td>
+            <td><span class="badge badge-red">Критичний</span></td>
+          </tr>
+          <tr>
+            <td><strong>FR-05</strong></td>
+            <td>Push-сповіщення про нові заявки з сайту</td>
+            <td><span class="badge badge-orange">Високий</span></td>
+          </tr>
+          <tr>
+            <td><strong>FR-06</strong></td>
+            <td>Архівування та відновлення записів</td>
+            <td><span class="badge badge-orange">Високий</span></td>
+          </tr>
+          <tr>
+            <td><strong>FR-07</strong></td>
+            <td>Управління прайс-листом (CRUD послуг)</td>
+            <td><span class="badge badge-orange">Високий</span></td>
+          </tr>
+          <tr>
+            <td><strong>FR-08</strong></td>
+            <td>Генерація та поширення PDF-звіту</td>
+            <td><span class="badge badge-blue">Середній</span></td>
+          </tr>
+          <tr>
+            <td><strong>FR-09</strong></td>
+            <td>Редагування профілю з фото</td>
+            <td><span class="badge badge-blue">Середній</span></td>
+          </tr>
+          <tr>
+            <td><strong>FR-10</strong></td>
+            <td>Конвертація заявки на дзвінок у запис</td>
+            <td><span class="badge badge-blue">Середній</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Нефункціональні -->
+    <div>
+      <h3 style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:16px;">
+        🏗️ Нефункціональні вимоги
+      </h3>
+      <table>
+        <thead>
+          <tr><th>ID</th><th>Вимога</th><th>Показник</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>NFR-01</strong></td>
+            <td>Час відповіді API</td>
+            <td><span class="badge badge-green">&lt; 3 секунди</span></td>
+          </tr>
+          <tr>
+            <td><strong>NFR-02</strong></td>
+            <td>Платформа</td>
+            <td><span class="badge badge-green">Android 10+</span></td>
+          </tr>
+          <tr>
+            <td><strong>NFR-03</strong></td>
+            <td>Збереження сесії</td>
+            <td><span class="badge badge-green">AsyncStorage</span></td>
+          </tr>
+          <tr>
+            <td><strong>NFR-04</strong></td>
+            <td>Безпека паролів</td>
+            <td><span class="badge badge-green">HTTPS + hash</span></td>
+          </tr>
+          <tr>
+            <td><strong>NFR-05</strong></td>
+            <td>Частота polling</td>
+            <td><span class="badge badge-green">15 секунд</span></td>
+          </tr>
+          <tr>
+            <td><strong>NFR-06</strong></td>
+            <td>Підтримка офлайн-режиму</td>
+            <td><span class="badge badge-orange">Кеш AsyncStorage</span></td>
+          </tr>
+          <tr>
+            <td><strong>NFR-07</strong></td>
+            <td>Адаптивний UI</td>
+            <td><span class="badge badge-green">SafeArea + Scale</span></td>
+          </tr>
+          <tr>
+            <td><strong>NFR-08</strong></td>
+            <td>Темна / світла тема</td>
+            <td><span class="badge badge-green">Ручне перемикання</span></td>
+          </tr>
+          <tr>
+            <td><strong>NFR-09</strong></td>
+            <td>Розмір .apk</td>
+            <td><span class="badge badge-green">Мінімізований</span></td>
+          </tr>
+          <tr>
+            <td><strong>NFR-10</strong></td>
+            <td>Типізація коду</td>
+            <td><span class="badge badge-green">TypeScript strict</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 7 — API
+════════════════════════════════════════════════════ -->
+<section class="slide" id="s7" style="background:var(--bg);">
+  <div class="slide-num">✦ 06 · API ІНТЕГРАЦІЯ</div>
+  <h2 class="slide-title">Єдиний <span class="accent">REST API</span> ендпоінт</h2>
+  <p class="slide-desc">
+    Всі запити спрямовуються на <strong>https://thebeauty-room.com/api.php</strong>.
+    Тип операції визначається параметром <code style="color:var(--pink-dark);">action</code>.
+  </p>
+
+  <div class="grid2">
+    <div>
+      <h3 style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:14px;">GET-запити (отримання даних)</h3>
+
+      <div class="endpoint">
+        <span class="method get">GET</span>
+        <span class="path">?action=get_all_data</span>
+        <span class="desc">Всі записи, архів, дзвінки</span>
+      </div>
+      <div class="endpoint">
+        <span class="method get">GET</span>
+        <span class="path">?action=get_pricing</span>
+        <span class="desc">Прайс-лист категоріями</span>
+      </div>
+      <div class="endpoint">
+        <span class="method get">GET</span>
+        <span class="path">?action=get_profile&user_id=…</span>
+        <span class="desc">Дані профілю майстра</span>
+      </div>
+
+      <h3 style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:14px;margin-top:20px;">POST: Авторизація та профіль</h3>
+      <div class="endpoint">
+        <span class="method post">POST</span>
+        <span class="path">action=login</span>
+        <span class="desc">Вхід (email, password)</span>
+      </div>
+      <div class="endpoint">
+        <span class="method post">POST</span>
+        <span class="path">action=update_profile</span>
+        <span class="desc">Оновлення імені, тел., спец.</span>
+      </div>
+      <div class="endpoint">
+        <span class="method post">POST</span>
+        <span class="path">action=upload_avatar</span>
+        <span class="desc">Завантаження фото профілю</span>
+      </div>
+    </div>
+
+    <div>
+      <h3 style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:14px;">POST: Записи клієнтів</h3>
+      <div class="endpoint">
+        <span class="method post">POST</span>
+        <span class="path">action=add_record</span>
+        <span class="desc">Новий запис</span>
+      </div>
+      <div class="endpoint">
+        <span class="method post">POST</span>
+        <span class="path">action=update_record</span>
+        <span class="desc">Редагування запису</span>
+      </div>
+      <div class="endpoint">
+        <span class="method post">POST</span>
+        <span class="path">action=delete_record</span>
+        <span class="desc">Видалення активного</span>
+      </div>
+      <div class="endpoint">
+        <span class="method post">POST</span>
+        <span class="path">action=move_to_archive</span>
+        <span class="desc">Архівація запису</span>
+      </div>
+      <div class="endpoint">
+        <span class="method post">POST</span>
+        <span class="path">action=restore</span>
+        <span class="desc">Відновлення з архіву</span>
+      </div>
+      <div class="endpoint">
+        <span class="method post">POST</span>
+        <span class="path">action=delete_archive</span>
+        <span class="desc">Видалення з архіву</span>
+      </div>
+      <div class="endpoint">
+        <span class="method post">POST</span>
+        <span class="path">action=delete_appointment</span>
+        <span class="desc">Видалення дзвінка</span>
+      </div>
+
+      <h3 style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:14px;margin-top:16px;">POST: Прайс та сповіщення</h3>
+      <div class="endpoint">
+        <span class="method post">POST</span>
+        <span class="path">action=add_service</span>
+        <span class="desc">Нова послуга</span>
+      </div>
+      <div class="endpoint">
+        <span class="method post">POST</span>
+        <span class="path">action=update_service</span>
+        <span class="desc">Редагування послуги</span>
+      </div>
+      <div class="endpoint">
+        <span class="method post">POST</span>
+        <span class="path">action=check_new_appointments</span>
+        <span class="desc">Перевірка нових заявок</span>
+      </div>
+      <div class="endpoint">
+        <span class="method post">POST</span>
+        <span class="path">action=add_callback</span>
+        <span class="desc">Тест push-сповіщень</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight" style="margin-top:20px;">
+    <div class="code-block">
+<span class="cmt">// Приклад: polling нових заявок (index.tsx)</span>
+<span class="kw">const</span> formData = <span class="kw">new</span> FormData();
+formData.append(<span class="str">'action'</span>, <span class="str">'check_new_appointments'</span>);
+formData.append(<span class="str">'last_check_time'</span>, lastCheckTime.current);
+
+<span class="kw">const</span> response = <span class="kw">await</span> fetch(<span class="str">'https://thebeauty-room.com/api.php'</span>, {
+  method: <span class="str">'POST'</span>, body: formData
+});
+<span class="kw">const</span> json = <span class="kw">await</span> response.json(); <span class="cmt">// { status, new_items[], server_time }</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 8 — ТЕСТУВАННЯ
+════════════════════════════════════════════════════ -->
+<section class="slide" id="s8" style="background:#fff;">
+  <div class="slide-num">✦ 07 · ТЕСТУВАННЯ</div>
+  <h2 class="slide-title">Методи та <span class="accent">тест-кейси</span></h2>
+
+  <div class="grid2" style="margin-bottom:28px;">
+    <div>
+      <h3 style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:14px;">🧪 Методи тестування</h3>
+      <div class="card" style="margin-bottom:12px;">
+        <div class="card-title">✅ Модульне (Unit) тестування</div>
+        <div class="card-body">Jest + @testing-library/react-native. Перевірка ізольованих функцій: маппінг API-даних, фільтрація записів, форматування дати/часу, логіка доступу canAccess().</div>
+      </div>
+      <div class="card" style="margin-bottom:12px;">
+        <div class="card-title">🔗 Інтеграційне тестування</div>
+        <div class="card-body">businessLogic.test.ts — тестування взаємодії між модулями AppConfig, Data, компонентами. Перевірка маппінгу record/archive/call в єдиний формат.</div>
+      </div>
+      <div class="card" style="margin-bottom:12px;">
+        <div class="card-title">🎭 Компонентне тестування</div>
+        <div class="card-body">Рендеринг LoginScreen, RecordCard, RecordFormModal, CategoryModal, StandardDashboard. Перевірка UI-станів та обробників подій через fireEvent.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">◑ Тестування методом «сірої скриньки»</div>
+        <div class="card-body">Тестувальник знає внутрішню логіку (ролі, permissions, API actions), але взаємодіє через реальний UI. Перевіряються граничні стани: порожні поля, мережеві помилки, некоректна відповідь сервера.</div>
+      </div>
+    </div>
+
+    <div>
+      <h3 style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:14px;">📋 Тестові файли</h3>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div class="tc">
+          <div class="tc-header"><span class="tc-id">login.test.tsx</span></div>
+          <div class="tc-body">8 груп · Рендеринг, валідація, успішний/помилковий логін, мережева помилка, fetch-запит</div>
+        </div>
+        <div class="tc">
+          <div class="tc-header"><span class="tc-id">AppConfig.test.ts</span></div>
+          <div class="tc-body">5 груп · ALL_CATEGORIES, MENU_PERMISSIONS, FORM_PERMISSIONS, canAccess()</div>
+        </div>
+        <div class="tc">
+          <div class="tc-header"><span class="tc-id">businessLogic.test.ts</span></div>
+          <div class="tc-body">7 груп · Маппінг record/archive/call, фільтрація, видалення, сповіщення, дата/час</div>
+        </div>
+        <div class="tc">
+          <div class="tc-header"><span class="tc-id">RecordCard.test.tsx</span></div>
+          <div class="tc-body">Рендеринг картки запису, кнопки дій, стан архіву/дзвінка</div>
+        </div>
+        <div class="tc">
+          <div class="tc-header"><span class="tc-id">RecordFormModal.test.tsx</span></div>
+          <div class="tc-body">Форма запису: поля, вибір дати, валідація, збереження</div>
+        </div>
+        <div class="tc">
+          <div class="tc-header"><span class="tc-id">StandardDashboard.test.tsx</span></div>
+          <div class="tc-body">Дашборд майстра: рендеринг, фільтрація за категорією</div>
+        </div>
+        <div class="tc">
+          <div class="tc-header"><span class="tc-id">CategoryModal.test.tsx</span></div>
+          <div class="tc-body">Модальне вікно вибору категорії</div>
+        </div>
+        <div class="tc">
+          <div class="tc-header"><span class="tc-id">index.test.tsx</span></div>
+          <div class="tc-body">Головний маршрутизатор: сесія, redirect, polling</div>
+        </div>
+        <div class="tc">
+          <div class="tc-header"><span class="tc-id">Colors.test.ts · Data.test.ts</span></div>
+          <div class="tc-body">Константи кольорів та даних (COSMETOLOGISTS тощо)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:16px;">🔎 Ключові тест-кейси</h3>
+  <div class="grid3">
+    <div class="tc">
+      <div class="tc-header">
+        <span class="tc-id">TC-001</span>
+        <span class="badge badge-red">Критичний</span>
+      </div>
+      <div class="tc-name">Вхід з порожніми полями</div>
+      <div class="tc-body">
+        <strong>Дія:</strong> Натиснути «Увійти» без email/пароля.<br>
+        <strong>Очікування:</strong> Alert «Введіть Email та Пароль», fetch не викликається.
+      </div>
+      <div class="result pass">✔ ПРОЙДЕНО</div>
+    </div>
+    <div class="tc">
+      <div class="tc-header">
+        <span class="tc-id">TC-002</span>
+        <span class="badge badge-red">Критичний</span>
+      </div>
+      <div class="tc-name">Успішна авторизація</div>
+      <div class="tc-body">
+        <strong>Дія:</strong> Введіть коректні дані, натиснути «Увійти».<br>
+        <strong>Очікування:</strong> userData збережено в AsyncStorage, redirect на «/».
+      </div>
+      <div class="result pass">✔ ПРОЙДЕНО</div>
+    </div>
+    <div class="tc">
+      <div class="tc-header">
+        <span class="tc-id">TC-003</span>
+        <span class="badge badge-red">Критичний</span>
+      </div>
+      <div class="tc-name">Розмежування прав доступу</div>
+      <div class="tc-body">
+        <strong>Дія:</strong> Перевірити canAccess для ролей massage/epil/care/creator.<br>
+        <strong>Очікування:</strong> Майстер бачить лише свою категорію.
+      </div>
+      <div class="result pass">✔ ПРОЙДЕНО</div>
+    </div>
+    <div class="tc">
+      <div class="tc-header">
+        <span class="tc-id">TC-004</span>
+        <span class="badge badge-orange">Важливий</span>
+      </div>
+      <div class="tc-name">Маппінг API-даних запису</div>
+      <div class="tc-body">
+        <strong>Дія:</strong> Отримати raw record з API.<br>
+        <strong>Очікування:</strong> client_name→clientName, id→«rec_42», type=«record».
+      </div>
+      <div class="result pass">✔ ПРОЙДЕНО</div>
+    </div>
+    <div class="tc">
+      <div class="tc-header">
+        <span class="tc-id">TC-005</span>
+        <span class="badge badge-orange">Важливий</span>
+      </div>
+      <div class="tc-name">Мережева помилка при логіні</div>
+      <div class="tc-body">
+        <strong>Дія:</strong> Fetch кидає Network Error.<br>
+        <strong>Очікування:</strong> Alert «Помилка мережі · Перевірте інтернет».
+      </div>
+      <div class="result pass">✔ ПРОЙДЕНО</div>
+    </div>
+    <div class="tc">
+      <div class="tc-header">
+        <span class="tc-id">TC-006</span>
+        <span class="badge badge-orange">Важливий</span>
+      </div>
+      <div class="tc-name">Вибір action для видалення</div>
+      <div class="tc-body">
+        <strong>Дія:</strong> type=call→delete_appointment; archive→delete_archive; record→delete_record.<br>
+        <strong>Очікування:</strong> Правильний action в FormData.
+      </div>
+      <div class="result pass">✔ ПРОЙДЕНО</div>
+    </div>
+    <div class="tc">
+      <div class="tc-header">
+        <span class="tc-id">TC-007</span>
+        <span class="badge badge-blue">Середній</span>
+      </div>
+      <div class="tc-name">Зміст push-сповіщення</div>
+      <div class="tc-body">
+        <strong>Дія:</strong> scheduleLocalNotification('Іван', '050...').<br>
+        <strong>Очікування:</strong> title=«📞 Нова заявка!», trigger=null, sound=true.
+      </div>
+      <div class="result pass">✔ ПРОЙДЕНО</div>
+    </div>
+    <div class="tc">
+      <div class="tc-header">
+        <span class="tc-id">TC-008</span>
+        <span class="badge badge-blue">Середній</span>
+      </div>
+      <div class="tc-name">Форматування дати з нулем</div>
+      <div class="tc-body">
+        <strong>Дія:</strong> formatDate(new Date(2026, 0, 5)).<br>
+        <strong>Очікування:</strong> «2026-01-05» (leading zero).
+      </div>
+      <div class="result pass">✔ ПРОЙДЕНО</div>
+    </div>
+    <div class="tc">
+      <div class="tc-header">
+        <span class="tc-id">TC-009 · Сіра скринька</span>
+        <span class="badge badge-purple">Grey-box</span>
+      </div>
+      <div class="tc-name">Фільтр «Всі записи»</div>
+      <div class="tc-body">
+        <strong>Дія:</strong> Вибрати фільтр «Всі записи».<br>
+        <strong>Очікування:</strong> Виключаються type=archive та type=call — знаючи внутрішню логіку.
+      </div>
+      <div class="result pass">✔ ПРОЙДЕНО</div>
+    </div>
+  </div>
+
+  <!-- Сіра скринька окремо -->
+  <div class="highlight" style="margin-top:24px;">
+    <h3 style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:12px;">◑ Тестування методом «Сірої скриньки» (Grey-box Testing)</h3>
+    <div class="grid2">
+      <div>
+        <p style="font-size:13px;color:var(--sub);line-height:1.7;margin-bottom:12px;">
+          Сіра скринька дозволила тестувальнику знати внутрішню структуру ролей та API,
+          не маючи прямого доступу до серверної бази даних. Це дало можливість:
+        </p>
+        <ul class="check-list">
+          <li>Перевірити граничні стани дозволів (<code style="color:var(--pink-dark);">canAccess</code>)</li>
+          <li>Симулювати різні відповіді API (success/error/HTML)</li>
+          <li>Тестувати поведінку при <code style="color:var(--pink-dark);">worker_name = null</code></li>
+          <li>Перевірити fallback AsyncStorage при недоступному API</li>
+        </ul>
+      </div>
+      <div class="code-block">
+<span class="cmt">// Grey-box: знаємо логіку, тестуємо через UI</span>
+<span class="kw">it</span>(<span class="str">'massage НЕ бачить Elos-епіляція'</span>, () =&gt; {
+  expect(canAccess(<span class="str">'Elos-епіляція'</span>, <span class="str">'massage'</span>)).toBe(<span class="num">false</span>);
+});
+
+<span class="kw">it</span>(<span class="str">'fallback: пустий worker → «Не вказано»'</span>, () =&gt; {
+  <span class="kw">const</span> raw = { ...record, worker_name: <span class="num">null</span> };
+  expect(mapRecord(raw).master).toBe(<span class="str">'Не вказано'</span>);
+});
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 9 — ВПРОВАДЖЕННЯ
+════════════════════════════════════════════════════ -->
+<section class="slide" id="s9" style="background:var(--bg);">
+  <div class="slide-num">✦ 08 · ВПРОВАДЖЕННЯ</div>
+  <h2 class="slide-title">Встановлення <span class="accent">.apk</span> на Android</h2>
+  <p class="slide-desc">
+    На поточному етапі застосунок розповсюджується як <strong>.apk-файл</strong> для пристроїв
+    на базі ОС Android. Публікація в App Store (iOS) не здійснена у зв'язку з відсутністю
+    фінансування облікового запису розробника Apple Developer Program ($99/рік).
+  </p>
+
+  <div class="grid2">
+    <div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-left"><div class="tl-dot">1️⃣</div><div class="tl-line"></div></div>
+          <div class="tl-right">
+            <h4>Збірка .apk через EAS Build</h4>
+            <p>Використовується Expo Application Services (EAS Build). Конфігурація в <code style="color:var(--pink-dark);">eas.json</code>. Команда: <code style="color:var(--pink-dark);">eas build --platform android</code></p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-left"><div class="tl-dot">2️⃣</div><div class="tl-line"></div></div>
+          <div class="tl-right">
+            <h4>Передача файлу замовнику</h4>
+            <p>Файл .apk передається через Google Drive, Telegram або пряме посилання. Підходить для внутрішнього корпоративного використання.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-left"><div class="tl-dot">3️⃣</div><div class="tl-line"></div></div>
+          <div class="tl-right">
+            <h4>Дозвіл «Невідомі джерела»</h4>
+            <p>На пристрої перейти: <em>Налаштування → Безпека → Встановлення з невідомих джерел</em> → увімкнути для браузера/файлового менеджера.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-left"><div class="tl-dot">4️⃣</div><div class="tl-line"></div></div>
+          <div class="tl-right">
+            <h4>Встановлення .apk</h4>
+            <p>Відкрити завантажений файл → натиснути «Встановити» → дочекатись завершення.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-left"><div class="tl-dot">5️⃣</div></div>
+          <div class="tl-right">
+            <h4>Перший запуск і авторизація</h4>
+            <p>Запустити Beauty Room Workspace → ввести логін/пароль, наданий адміністратором системи.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="card" style="margin-bottom:16px;">
+        <div class="card-icon icon-blue">📋</div>
+        <div class="card-title">Системні вимоги</div>
+        <div class="card-body">
+          <ul class="check-list" style="margin-top:8px;">
+            <li><strong>ОС:</strong> Android 10.0 (API 29) або новіше</li>
+            <li><strong>RAM:</strong> мінімум 2 GB</li>
+            <li><strong>Сховище:</strong> ~50 MB вільного простору</li>
+            <li><strong>Інтернет:</strong> обов'язковий (Wi-Fi або мобільний)</li>
+            <li><strong>Дозволи:</strong> Сповіщення, Галерея (для фото)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:16px;border-color:var(--pink-soft);">
+        <div class="card-icon icon-rose">🍎</div>
+        <div class="card-title">Щодо iOS</div>
+        <div class="card-body">
+          Застосунок розроблено на Expo / React Native, що технічно дозволяє збірку під iOS.
+          Однак публікація в App Store вимагає членства в <strong>Apple Developer Program</strong>
+          ($99/рік), якого наразі немає. При появі відповідного фінансування — застосунок
+          може бути опублікований без значних змін у коді.
+        </div>
+      </div>
+
+      <div class="highlight">
+        <p style="font-size:13px;color:var(--sub);line-height:1.7;">
+          <strong style="color:var(--text);">🔄 Оновлення:</strong> При виході нової версії —
+          надається новий .apk файл. Встановлення поверх існуючого зберігає дані сесії в AsyncStorage.
+          У майбутньому можлива автоматизація оновлень через Expo Updates (OTA).
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 10 — ПЕРСПЕКТИВИ
+════════════════════════════════════════════════════ -->
+<section class="slide" id="s10" style="background:#fff;">
+  <div class="slide-num">✦ 09 · ВИСНОВКИ ТА ПЕРСПЕКТИВИ</div>
+  <h2 class="slide-title">Початок <span class="accent">великого</span> шляху</h2>
+
+  <div class="grid2" style="margin-bottom:32px;">
+    <div class="highlight">
+      <h3 style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:14px;">✅ Поточний стан</h3>
+      <ul class="check-list">
+        <li><strong>Замовник повністю задоволений</strong> поточним програмним продуктом</li>
+        <li>Всі заявлені функції реалізовані та протестовані</li>
+        <li>Система стабільно працює в режимі реального часу</li>
+        <li>Персонал салону вже використовує застосунок щодня</li>
+        <li>Інтеграція з сайтом та веб-адмінпанеллю — налагоджена</li>
+        <li>Покриття тестами — 10 файлів, 60+ тест-кейсів</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:14px;">🚀 Потенціал розвитку</h3>
+      <ul class="check-list">
+        <li>Публікація в <strong>Google Play Store</strong> (офіційний магазин)</li>
+        <li>Публікація в <strong>App Store</strong> (при фінансуванні)</li>
+        <li><strong>Push FCM</strong> замість polling для миттєвих сповіщень</li>
+        <li><strong>Онлайн-запис клієнтами</strong> прямо через застосунок</li>
+        <li><strong>Аналітика та статистика</strong> доходів по майстрам</li>
+        <li><strong>Інтеграція з месенджерами</strong> (Telegram-бот для клієнтів)</li>
+        <li><strong>Автоматичні нагадування</strong> клієнтам за добу до запису</li>
+        <li><strong>OTA-оновлення</strong> через Expo Updates</li>
+      </ul>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- Технологічний стек -->
+  <h3 style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:16px;text-align:center;">🛠️ Технологічний стек</h3>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:32px;">
+    <span class="pill">⚛️ React Native 0.81</span>
+    <span class="pill">📦 Expo SDK 54</span>
+    <span class="pill">🔷 TypeScript</span>
+    <span class="pill">🗂️ expo-router</span>
+    <span class="pill">🔔 expo-notifications</span>
+    <span class="pill">📄 expo-print</span>
+    <span class="pill">🖼️ expo-image-picker</span>
+    <span class="pill">💾 AsyncStorage</span>
+    <span class="pill">🧪 Jest</span>
+    <span class="pill">🧪 @testing-library/react-native</span>
+    <span class="pill">🔧 EAS Build</span>
+    <span class="pill">🌐 PHP REST API</span>
+  </div>
+
+  <!-- Фінальна цитата -->
+  <div class="highlight" style="text-align:center;max-width:700px;margin:0 auto;">
+    <p style="font-family:'Playfair Display',serif;font-size:20px;color:var(--text);font-style:italic;line-height:1.6;margin-bottom:12px;">
+      «Beauty Room Workspace App — це лише початок цифрової трансформації салону.
+      Фундамент закладено надійно, і він готовий до масштабування.»
+    </p>
+    <p style="font-size:13px;color:var(--muted);">
+      Розроблено для <strong>Beeauty Room</strong> · м. Бердичів · 2026
+    </p>
+    <div style="margin-top:16px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap;">
+      <span class="badge badge-pink">🌸 Beauty Room</span>
+      <span class="badge badge-green">✅ Замовник задоволений</span>
+      <span class="badge badge-blue">📱 Android Ready</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  🌸 Beauty Room Workspace App &nbsp;·&nbsp; Косметологічний салон Beeauty Room, м. Бердичів &nbsp;·&nbsp;
+  Власниця: Островська Ольга Василівна &nbsp;·&nbsp; © 2026
+</footer>
+
+<script>
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    const total    = document.documentElement.scrollHeight - window.innerHeight;
+    document.getElementById('progress').style.width = (scrolled / total * 100) + '%';
+  });
+
+  // Fade in on scroll
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('fade-in');
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.card, .tc, .tl-item, .endpoint, .arch-box')
+    .forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
