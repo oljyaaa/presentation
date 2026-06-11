@@ -969,6 +969,14 @@
       flex: 1;
     }
 
+    /* Загальне правило для slides 7 та 8 (також використовують .boxes-row) */
+    .boxes-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      flex: 1;
+    }
+
     .box-card {
       border-radius: 18px;
       padding: 22px 20px;
@@ -1337,6 +1345,14 @@
     }
 
     #s11 .features-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+      flex: 1;
+    }
+
+    /* Загальне правило — застосовується і до sw12 (Особливості адмін-панелі) */
+    .features-grid {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       gap: 14px;
